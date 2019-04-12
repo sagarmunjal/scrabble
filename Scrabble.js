@@ -15,3 +15,21 @@ function shuffle(){
     console.log(word);
 }
 shuffle();
+
+// how to generate the table to render the DOM 
+// Stage 1 
+function createTable(){
+    var body = document.getElementsByTagName("body")[0];
+    // create elements <table> and a <tbody>
+    var tbl = document.createElement("table");
+    var tblBody = document.createElement("tbody");
+        
+    for (var j = 0; j <= 2; j++) {
+        var row = document.createElement("tr");
+            for (var i = 0; i < 2; i++) {
+            
+            }
+        
+    }
+    
+}
