@@ -65,6 +65,11 @@ function generateTable(id, rows, columns, positions){
     tableref.innerHTML = tbl.join('');
 }
 
+/* assignment 
+// ---------------------------------------
+// we add an event listener to handle shuffle button press in the code below. Add the code logic for the same. 
+*/
+
 function newGame(){
     attempt = [];
     // remove the disabled classes from 
