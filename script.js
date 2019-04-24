@@ -70,6 +70,29 @@ function handleShuffleClick(){
     // your assignment is to log the shuffled string in the console, everytime the shuffle button is pressed
 }
 
+function handlePlaceClick(){
+
+}
+
+function move(target){
+    if(target){
+        let val = target.innerHTML;
+        console.log(val);
+    }
+}
+
+var gameId;
+
+function pickAGame(){
+    do{
+        random = Math.floor(locations.length * Math.random())   
+    }while(random == gameId){
+        gameId = random
+        game = locations[random]
+        console.log(game);
+        return game;
+    }
+}
 
 function newGame(){
     attempt = [];
@@ -78,6 +101,14 @@ function newGame(){
     shuffle.addEventListener('click', handleShuffleClick);
     document.getElementById('place').classList.remove('disabledClick');
     //placeButton.addEventListener('click', handlePlaceClick);
+
+    // pick a game
+    game = pickAGame();
+
+    // gnerate 7x7 table
+    generateTable('crossword', 7, 7, game[0]);
+
+
 }
 
 
