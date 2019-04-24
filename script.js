@@ -1,4 +1,4 @@
-//taking one array first to figure out logic, will modify later
+debugger;
 var words = [
     ["purple", "pulp", "rue", "pure"], // game #1
     ["banish", "bash", "nab", "bias"] // game #2
@@ -10,68 +10,58 @@ var locations = [
         "4,1,d", "3,2,a", "1,3,d", "1,5,a"] // game #2
 ];
 
-/*
+attempt = [];
+available = [];
+filled = [];
 
-function shuffle(){
-    //word has the letters of first word in chosen array.
-    var word = words1[0].split('');
-    var counter = word.length - 1;
-    while(counter>=0){
-        //sw value will determine the index to swap
-        var sw = Math.ceil(Math.random() * counter);
-        var temp = word[0];
-        word[0] = word[sw];
-        word[sw] = temp;
-        counter--;
-    }
-    console.log(word);
-}
-shuffle();
+// gnerate inital tables
+generateTable('crossword', 7, 7);
+generateTable('paletteA', 1, 6);
+generateTable('paletteB', 1, 7);
 
-// how to generate the table to render the DOM 
-// Stage 1 
-function createTable(){
-    var body = document.getElementsByTagName("body")[0];
-    // create elements <table> and a <tbody>
-    var tbl = document.createElement("table");
-    var tblBody = document.createElement("tbody");
-        
-    for (var j = 0; j <= 2; j++) {
-        var row = document.createElement("tr");
-            for (var i = 0; i < 2; i++) {
-            
-            }
-        
-    }
+
+
+function checkIfWon(){
+    won = true;
+    words[gameId].forEach((word) => {
+        if(filled.indexOf(word) == -1)
+            won = false
+    })
     
+    return won;
 }
 
+
+/* ----------------------------------------------------------------------------------------------------------
+    @param id
+    @param rows
+    @param columns
+    @param positions String 
 */
+function generateTable(id, rows, columns, positions){
+    let tableref = document.getElementById(id);
+    let tbl = [];
+   
+    let positionArr = []
 
+    if(positions){
+        for(var k =0; k<7; k++){
+            positionArr.push(positions.split('',7))
+            positions = positions.substr(7)
+        }
+    }
 
-var gameId;
-function newGame(){
-
-    // write logic of creating a randomNumber on the basis of the length of the words array. 
-    gameId === 0 ? gameId = 1 : gameId = 0;
-    createTable(generateTable('crossword', 7, 7, locations[gameId][0]));
-
-    generateTable('paletteA', 1, 6);
-    // content
-        available = words[gameId][0];
-        available = available.split('');
-        // shuffle
-        available = available.sort((a,b)=> {if(a>b) {return 1 }else if(a<b) {return -1 }else {return 0} } );
-        available = available.map((data) => {
-            return {
-                value: data,
-                available: true
+    for ( var i =1; i<= rows; i++) {
+        tbl.push("<tr>");
+            for (var j = 1 ; j<= columns; j++){
+                className = ''
+                if(positionArr.length > 0 && positionArr[i-1][j-1] == 'X'){
+                    className = 'hasLetter'
+                }
+                tbl.push(`<td data-table=${id} data-x=${j} data-y=${i} class="${className }">   </td>`)
             }
-        })
-        
+        tbl.push("</tr>")
+    }
+
+    tableref.innerHTML = tbl.join('');
 }
-
-newGame();
-newGame();
-newGame();
-
