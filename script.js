@@ -1,4 +1,3 @@
-debugger;
 var words = [
     ["purple", "pulp", "rue", "pure"], // game #1
     ["banish", "bash", "nab", "bias"] // game #2
@@ -65,3 +64,23 @@ function generateTable(id, rows, columns, positions){
 
     tableref.innerHTML = tbl.join('');
 }
+
+function newGame(){
+    attempt = [];
+    // remove the disabled classes from 
+    document.getElementById('shuffle').classList.remove('disabledClick');
+    //shuffle.addEventListener('click', handleShuffleClick);
+    document.getElementById('place').classList.remove('disabledClick');
+    //placeButton.addEventListener('click', handlePlaceClick);
+}
+
+
+
+// ------------------------------------------------------------------------------------------------------------------------
+            // Set event listeners
+            newGameButton = document.getElementById('new-game')
+            newGameButton.onclick = () => {
+                    newGame()
+            }  
+// --------------------------------------------------------------------------------------------------------
+
