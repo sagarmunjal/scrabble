@@ -45,6 +45,7 @@ function generateTable(id, rows, columns, positions){
 
     if(positions){
         for(var k =0; k<7; k++){
+            // follow hint positionArr in the end
             positionArr.push(positions.split('',7))
             positions = positions.substr(7)
         }
@@ -102,7 +103,7 @@ function newGame(){
     document.getElementById('place').classList.remove('disabledClick');
     //placeButton.addEventListener('click', handlePlaceClick);
 
-    // pick a game
+    // pick a game returns any one game locations
     game = pickAGame();
 
     // gnerate 7x7 table
@@ -121,3 +122,33 @@ function newGame(){
             }  
 // --------------------------------------------------------------------------------------------------------
 
+
+
+
+
+
+// HINTS SECTION 
+// Run the hints below after uncommenting in a separate about:blank page
+
+
+/*-----------------------------------------
+
+Hint positionArr 
+    var locations = [
+        ["xxxxXxxxxxxXxxxxxxXxxxXXXXXXxXxXxxxxXxXxxxxXxxxxx",
+            "2,4,a", "5,1,d", "4,4,d", "2,4,d"], // game #1
+        ["xxxXxxxxxXXXXxXxxXxxxXxxXxxxXXXXxxxxxxXxxxxxxxxxx",
+            "4,1,d", "3,2,a", "1,3,d", "1,5,a"] // game #2
+    ];
+
+    var positions = locations[0][0];
+
+    var positionArr = [];
+
+    for(i=0;i<7;i++){
+        positionArr.push(positions.split('',7));
+        // cuts the first 7 characters fo the string
+        console.log(positions = positions.substr(7));
+    }
+    console.log(positionArr);
+------------------------------------------*/
