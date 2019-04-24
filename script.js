@@ -65,16 +65,17 @@ function generateTable(id, rows, columns, positions){
     tableref.innerHTML = tbl.join('');
 }
 
-/* assignment 
-// ---------------------------------------
-// we add an event listener to handle shuffle button press in the code below. Add the code logic for the same. 
-*/
+function handleShuffleClick(){
+    // this function takes up the array of element and returns a shuffled string everytime when invoked.
+    // your assignment is to log the shuffled string in the console, everytime the shuffle button is pressed
+}
+
 
 function newGame(){
     attempt = [];
     // remove the disabled classes from 
     document.getElementById('shuffle').classList.remove('disabledClick');
-    //shuffle.addEventListener('click', handleShuffleClick);
+    shuffle.addEventListener('click', handleShuffleClick);
     document.getElementById('place').classList.remove('disabledClick');
     //placeButton.addEventListener('click', handlePlaceClick);
 }
