@@ -109,6 +109,8 @@ function newGame(){
     // gnerate 7x7 table
     generateTable('crossword', 7, 7, game[0]);
 
+    // generate a 1x6 table
+    generateTable('paletteA', 1, 6);
 
 }
 
