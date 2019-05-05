@@ -15,8 +15,8 @@ filled = [];
 
 // gnerate inital tables
 generateTable('crossword', 7, 7);
-generateTable('paletteA', 1, 6);
-generateTable('paletteB', 1, 7);
+generateTable('paletteAvailable', 1, 6);
+generateTable('paletteSubmit', 1, 7);
 
 
 
@@ -110,9 +110,61 @@ function newGame(){
     generateTable('crossword', 7, 7, game[0]);
 
     // generate a 1x6 table
-    generateTable('paletteA', 1, 6);
+    generateTable('paletteAvailable', 1, 6);
 
+    // content 
+
+    available = words[gameId][0];
+    available = available.split('');
+    available = available.sort((a,b)=> {if(a>b) {return 1 }else if(a<b) {return -1 }else {return 0} } )
+    available = available.map(data =>{
+        return {
+            value:data,
+            available:true
+        }
+    })
+
+    setDataInAvailable('paletteAvailable', available);
+
+    generateTable('paletteSubmit',1,7);
 }
+
+
+    function setDataInAvailable(id, content, direction='a', startx=1, starty=1){
+        if(id=="paletteAvailable"){
+            for(i=0;i<=5;i++){
+                let cell = document.querySelectorAll(`[data-table='${id}'][data-x='${i+1}'][data-y='1']`)
+                cell[0].innerHTML = ""
+                cell[0].classList.remove('disabledClick')
+            }
+        }
+        if(id=="paletteSubmit"){
+            let cell = document.querySelectorAll(`[data-table='${id}'][data-x='${i+1}'][data-y='1']`)
+            cell[0].innerHTML = ""
+        }
+
+        
+        
+        var contentMap = available.map((letter)=>{
+            return {
+                x: (() => {
+                    if(direction == 'a')
+                        return startx++
+                    else
+                        return startx
+                })(),
+                y: (() => {
+                    if(direction == 'd')
+                        return starty++
+                    else
+                        return starty 
+                })(),
+                val: letter.value,
+                available: letter.available,
+            }
+        })
+        console.log(contentMap);
+    }
 
 
 
