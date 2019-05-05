@@ -164,6 +164,13 @@ function newGame(){
             }
         })
         console.log(contentMap);
+
+        // filling this data in the DOM 
+
+        contentMap.forEach(function(item){
+                document.querySelectorAll(`[data-table='${id}'][data-x='${item.x}'][data-y='${item.y}']`)[0].innerHTML = item.val;
+            }
+        )
     }
 
 
