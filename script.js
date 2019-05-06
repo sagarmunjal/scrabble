@@ -177,15 +177,14 @@ function newGame(){
             data.button = paletteAvailableButtons[count++]
         })
         available.forEach(function(data){
-            available.button.addEventListener('click',attemptToSubmit);
+            data.button.addEventListener('click',attemptToSubmit);
         })
     }
 
-
 // ------------------------------------------------------------------------------------------------------------------------
         // attempt to submit panel handles all the button clicks from the available panel then added to the submit panel
-        function attemptToSubmit(){
-            
+        function attemptToSubmit(e){
+            console.log(`button ${e.target.innerHTML} was pressed `)
         }
 
 // ------------------------------------------------------------------------------------------------------------------------
