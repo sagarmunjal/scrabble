@@ -80,6 +80,7 @@ function move(target){
         let val = target.innerHTML;
         console.log(val);
     }
+
 }
 
 var gameId;
@@ -130,7 +131,22 @@ function newGame(){
 }
 
 
-    function setDataInAvailable(id, content, direction='a', startx=1, starty=1){
+    function setDataInAvailable(){
+        setContent("paletteAvailable",available);
+
+        var count = 0;
+        var paletteAvailableButtons = document.querySelectorAll(`[data-table='paletteAvailable']`);
+        available.forEach(function(data){
+            data.button = paletteAvailableButtons[count++]
+        })
+        available.forEach(function(data){
+            console.log(data)
+            data.button.addEventListener('click',handleButtonClick);
+        })
+    }
+
+    function setContent(id, content, direction='a', startx=1, starty=1){
+        
         if(id=="paletteAvailable"){
             for(i=0;i<=5;i++){
                 let cell = document.querySelectorAll(`[data-table='${id}'][data-x='${i+1}'][data-y='1']`)
@@ -143,9 +159,9 @@ function newGame(){
             cell[0].innerHTML = ""
         }
 
-        
-        
-        var contentMap = available.map((letter)=>{
+        console.log(`${content[0]}`)
+
+        var letterBoxesData = content.map((letter)=>{
             return {
                 x: (() => {
                     if(direction == 'a')
@@ -163,29 +179,72 @@ function newGame(){
                 available: letter.available,
             }
         })
-        console.log(contentMap);
+    
+
+
+
 
         // filling this data in the DOM 
+            letterBoxesData.forEach(function(letterBoxData){
+                var letterBoxesDOM = document.querySelectorAll(`[data-table='${id}'][data-x='${letterBoxData.x}'][data-y='${letterBoxData.y}']`)
 
-        contentMap.forEach(function(item){
-                document.querySelectorAll(`[data-table='${id}'][data-x='${item.x}'][data-y='${item.y}']`)[0].innerHTML = item.val;
-            }
-        )
-        var count = 0;
-        var paletteAvailableButtons = document.querySelectorAll(`[data-table='paletteAvailable']`);
-        available.forEach(function(data){
-            data.button = paletteAvailableButtons[count++]
-        })
-        available.forEach(function(data){
-            data.button.addEventListener('click',attemptToSubmit);
-        })
+                if( letterBoxData.available == false ){
+                    letterBoxesDOM[0].classList.add('disabledClick');
+                    letterBoxesDOM[0].removeEventListener('click',handleButtonClick)
+                }
+                letterBoxesDOM[0].innerHTML = letterBoxData.val;
+                
+
+            })
     }
+
+// handle clicking the letters button to submit
+        function handleButtonClick(e){
+            attemptToSubmit(e.target);
+        }
+
+deleteButton = document.getElementById('delete')
+
+// function handle deleteClick
+        function handleDeleteClick(){
+
+        }
 
 // ------------------------------------------------------------------------------------------------------------------------
         // attempt to submit panel handles all the button clicks from the available panel then added to the submit panel
-        function attemptToSubmit(e){
-            console.log(`button ${e.target.innerHTML} was pressed `)
+        function attemptToSubmit(target){
+            console.log(`finally....`)
+            if(target){
+                let val = target.innerHTML;
+                console.log(val)
+                available.forEach((data)=>{
+                    if(data.button == target){
+                        data.available = false
+                        attempt.push({value:val,target:data.button})
+                    }
+                })
+            }
+            if(attempt.length > 0) {
+                // enable delete button
+                document.getElementById('delete').classList.remove('disabledClick');
+                deleteButton.addEventListener('click', handleDeleteClick);
+            }                
+            
+            // logic for highlighting the correct box in Palette B
+            let length = attempt.length;
+            if(length >=0 && length <= 6){
+                document.querySelectorAll('[data-table="paletteSubmit"]')[length].classList.add('nextLetter')
+            }
+            if((length-1) >=0 && length-1 <= 6){
+                document.querySelectorAll('[data-table="paletteSubmit"]')[length-1].classList.remove('nextLetter')
+            }
+
+            setContent('paletteSubmit', attempt)
+            setContent('paletteAvailable', available)
+
         }
+
+
 
 // ------------------------------------------------------------------------------------------------------------------------
 
