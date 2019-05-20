@@ -154,9 +154,12 @@ function newGame(){
                 cell[0].classList.remove('disabledClick')
             }
         }
-        if(id=="paletteSubmit"){
-            let cell = document.querySelectorAll(`[data-table='${id}'][data-x='${i+1}'][data-y='1']`)
-            cell[0].innerHTML = ""
+        if(id == 'paletteSubmit'){
+            // need to clean the table
+            for(i = 0; i<=6 ; i++){
+                let cell = document.querySelectorAll(`[data-table='${id}'][data-x='${i+1}'][data-y='1']`);
+                cell[0].innerHTML = ''
+            }
         }
 
         console.log(`${content[0]}`)
@@ -205,10 +208,37 @@ function newGame(){
 
 deleteButton = document.getElementById('delete')
 
-// function handle deleteClick
-        function handleDeleteClick(){
+    function handleDeleteClick(){
+        unmove();
+    }
 
+    function unmove(){
+        let popped = attempt.pop();
+        available.forEach((data)=>{
+            if(data.button == popped.target){
+                data.available = true
+            }
+        })
+        if(attempt.length == 0){
+            // disbale delete button
+            document.getElementById('delete').classList.add('disabledClick');
+            deleteButton.removeEventListener('click', handleDeleteClick);
         }
+
+        // set new content
+        setContent('paletteSubmit', attempt);
+
+        setDataInAvailable();
+
+        // logic for highlighting
+        let length = attempt.length;
+        if(length >=0 && length <= 6){
+            document.querySelectorAll('[data-table="paletteSubmit"]')[length].classList.add('nextLetter')
+        }
+        if((length+1) >=0 && length+1 <= 6){
+            document.querySelectorAll('[data-table="paletteSubmit"]')[length+1].classList.remove('nextLetter')
+        }
+    }
 
 // ------------------------------------------------------------------------------------------------------------------------
         // attempt to submit panel handles all the button clicks from the available panel then added to the submit panel
